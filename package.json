@@ -1,0 +1,87 @@
+{
+  "name": "big-repo",
+  "version": "2.0.0",
+  "description": "Sample app for multiple UI5 apps build & deployment as Work-zone Business Solution / Content Provider",
+  "author": "da.chen@me.com",
+  "private": true,
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/da-chen/big-repo"
+  },
+  "workspaces": [
+  ],
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "@cap-js/hana": "^1"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8",
+    "@sap/eslint-plugin-cds": "^3",
+    "@ui5/cli": "^4",
+    "eslint": "^9",
+    "rimraf": "^6",
+    "ui5-task-zipper": "^3"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "start:debug": "npx -n=\"--inspect\" cds-serve",
+    "ssh-remote": "cf ssh -N -L 9229:127.0.0.1:9229 big-repo-srv",
+    "build": "mbt build --mtar=big-repo.mtar",
+    "deploy": "cf deploy mta_archives/big-repo.mtar -f --retries 1",
+    "bd": "mbt build -p=cf --mtar=big-repo.mtar && cf deploy mta_archives/big-repo.mtar -f --retries 1",
+    "clean": "rimraf gen resources mta_archives",
+    "undeploy": "cf undeploy big-repo --delete-services --delete-service-keys",
+    "gen-env": "export CF_APP_NAME=big-repo-srv && curl https://raw.githubusercontent.com/sap-pilot/btp-util/main/cf/gen-default-env.js | node",
+    "launchpad": "cds watch --livereload false --open http://localhost:4004/launchpad.html"
+  },
+  "cds": {
+    "cdsc": {
+      "severities": {
+        "odata-spec-violation-no-key": "Warning"
+      }
+    },
+    "requires": {
+      "db": {
+        "kind": "sql"
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana-cloud"
+        },
+        "auth": {
+          "kind": "xsuaa"
+        }
+      },
+      "[development]": {
+        "auth": {
+          "kind": "mocked-auth",
+          "users": {
+            "rose": {
+              "roles": []
+            },
+            "martha": {
+              "roles": [
+                "reviewer"
+              ]
+            },
+            "amy": {
+              "roles": [
+                "processor"
+              ]
+            },
+            "admin": {
+              "password": "admin",
+              "roles": [
+                "admin"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

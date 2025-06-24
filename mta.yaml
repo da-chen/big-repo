@@ -1,0 +1,182 @@
+_schema-version: 3.3.0
+ID: big-repo
+version: 2.0.0
+description: "Sample app for multiple UI5 apps build & deployment as Work-zone Business Solution / Content Provider"
+
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        # - npm ci # run npm ci after checking out repo or npm install after updating package.json, instead of during build
+        - npx cds build --production
+        - mkdir -p resources
+        # "HTML5 business solution" deployment, see: 
+        # https://help.sap.com/docs/build-work-zone-standard-edition/sap-build-work-zone-standard-edition/developing-html5-apps-for-cross-subaccount-consumption
+        - cp app/cdm.json resources/cdm.json
+
+modules:
+  - name: big-repo-srv
+    type: nodejs
+    path: gen/srv
+    deployed-after:
+      - big-repo-db-deployer
+    parameters:
+      buildpack: nodejs_buildpack
+      readiness-health-check-type: http
+      readiness-health-check-http-endpoint: /health
+      instances: 1 # minimal 2 in case one instance crash the other one can take over (multi-AZ)
+      memory: 512M
+      disk-quota: 4096M
+      keep-existing-routes: true
+      enable-ssh: true # for develoopment/troubleshooting
+    build-parameters:
+      builder: npm-ci
+      ignore: ["node_modules/","default-*.json",".env"]
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: big-repo-uaa
+      - name: big-repo-db
+      - name: big-repo-destination
+      - name: big-repo-conn
+            
+  - name: big-repo-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      ignore: ["node_modules/","default-*.json",".env"]
+    requires:
+      - name: big-repo-db
+
+  - name: big-repo-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: big-repo-destination
+        parameters:
+          content-target: true
+      - name: big-repo-repo-host
+        parameters:
+          service-key:
+            name: big-repo-repo-host-key # add ${timestamp} to enforce service key rotation upon deployment, see https://help.sap.com/docs/btp/sap-business-technology-platform/service-keys#automatic-service-key-renewal
+      - name: big-repo-repo-runtime
+        parameters:
+          service-key:
+            name: big-repo-repo-runtime-key
+      - name: big-repo-uaa
+        parameters:
+          service-key:
+            name: big-repo-uaa-key
+    parameters:
+      content:
+        instance: # create app specific destiantion at instance level instead of subaccount level if applicable
+          destinations:
+            - Name: big-repo-repo-host
+              ServiceInstanceName: big-repo-repo-host
+              ServiceKeyName: big-repo-repo-host-key
+              sap.cloud.service: org.sapux.samples
+            - Name: big-repo-uaa
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: big-repo-uaa
+              ServiceKeyName: big-repo-uaa-key
+              sap.cloud.service: org.sapux.samples
+          existing_destinations_policy: update
+        subaccount:
+          destinations:
+            - Name: big-repo-cdm-dt-${space}
+              ServiceInstanceName: big-repo-repo-runtime
+              ServiceKeyName: big-repo-repo-runtime-key
+              URL: https://html5-apps-repo-rt.${default-domain}/applications/cdm/org.sapux.samples
+          existing_destinations_policy: update
+    build-parameters:
+      no-source: true
+
+  - name: big-repo-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: big-repo-destination # bind app content to destination instance so srv-url defined there can be access by apps/artifacts below
+      - name: big-repo-uaa
+      - name: big-repo-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+
+resources:
+  - name: big-repo-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  - name: big-repo-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        xsappname: big-repo-${space}
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: big-repo-uaa
+      service-plan: application
+
+  - name: big-repo-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance: # create app specific destiantion at instance level instead of subaccount level if applicable
+            existing_destinations_policy: update
+            destinations:
+              - Name: big-repo-srv
+                Description: DCore IAM CAP service
+                Authentication: NoAuthentication
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv-api/srv-url}
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+                HTML5.Timeout: 600000
+          subaccount:
+            existing_destinations_policy: ignore
+            destinations:
+              - Name: big-repo-cdm-rt-${space}
+                Authentication: NoAuthentication
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://{subdomain}.launchpad.${default-domain}
+                CEP.HTML5contentprovider: true
+      service: destination
+      service-name: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+
+  - name: big-repo-conn
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
+  - name: big-repo-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: big-repo-repo-host
+      service-plan: app-host
+
+  - name: big-repo-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: big-repo-repo-runtime
+      service-plan: app-runtime

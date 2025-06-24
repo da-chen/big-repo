@@ -1,0 +1,45 @@
+{
+    "xsappname": "big-repo",
+    "tenant-mode": "dedicated",
+    "description": "Sample app for Work-zone Business Solution / Content Provider deployment",
+    "scopes": [
+        {
+            "name": "uaa.user",
+            "description": "UAA"
+        },
+        {
+            "name": "$XSAPPNAME.admin",
+            "description": "Big Repo Admin"
+        }
+    ],
+    "attributes": [
+        {
+            "name": "BusinessUnit",
+            "description": "Business Unit",
+            "valueType": "string"
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "Token_Exchange",
+            "description": "UAA",
+            "scope-references": [
+                "uaa.user"
+            ]
+        },
+        {
+            "name": "Admin",
+            "description": "Big Repo Admin",
+            "scope-references": [
+                "$XSAPPNAME.admin"
+            ]
+        }
+    ],
+    "oauth2-configuration": {
+        "redirect-uris": [
+            "https://*.cfapps.us10.hana.ondemand.com/**",
+            "https://*.cfapps.us20.hana.ondemand.com/**",
+            "https://*.cfapps.eu10.hana.ondemand.com/**"
+        ]
+    }
+}
