@@ -116,6 +116,10 @@ modules:
           artifacts:
             - sflight-travel-processor.zip
           target-path: resources/
+        - name: incidents
+          artifacts:
+            - incidents.zip
+          target-path: resources/
 
   - name: sflight-travel-analytics
     type: html5
@@ -137,6 +141,15 @@ modules:
         - npm run build:cf
       supported-platforms: []
 
+  - name: incidents
+    type: html5
+    path: app/incidents
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
 resources:
   - name: big-repo-db
     type: com.sap.xs.hdi-container

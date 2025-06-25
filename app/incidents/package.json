@@ -1,0 +1,19 @@
+{
+    "name": "incidents",
+    "version": "0.0.1",
+    "description": "A Fiori application.",
+    "keywords": [
+        "ui5",
+        "openui5",
+        "sapui5"
+    ],
+    "main": "webapp/index.html",
+    "scripts": {
+        "build:cf": "ui5 build preload --clean-dest --config ui5-deploy.yaml",
+        "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf"
+    },
+    "devDependencies": {
+        "@ui5/cli": "*",
+        "ui5-task-zipper": "*"
+    }
+}

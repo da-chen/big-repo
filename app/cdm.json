@@ -23,6 +23,9 @@
                 },
                 {
                     "id": "sap.fe.cap.travel"
+                },
+                {
+                    "id": "sap.fe.cap.incidents"
                 }
             ]
         },
@@ -57,6 +60,10 @@
                 {
                     "appId": "sap.fe.cap.travel",
                     "vizId": "travel-inbound"
+                },
+                {
+                    "appId": "sap.fe.cap.incidents",
+                    "vizId": "incidents-display"
                 }
             ]
         },
@@ -131,6 +138,16 @@
                             "vizId": "travel-inbound"
                         }
                     ]
+                },
+                {
+                    "id": "BIG_REPO_INCIDENTS_SECTION",
+                    "title": "{{section.title.incidents}}",
+                    "viz": [
+                        {
+                            "appId": "sap.fe.cap.incidents",
+                            "vizId": "incidents-display"
+                        }
+                    ]
                 }
             ]
         },
@@ -140,7 +157,8 @@
                 "textDictionary": {
                     "title": "Big Repo",
                     "description": "Big Repo Page",
-                    "section.title.sflight": "Flights"
+                    "section.title.sflight": "Flights",
+                    "section.title.incidents": "Incidents"
                 }
             },
             {
@@ -148,7 +166,8 @@
                 "textDictionary": {
                     "title": "Big Repo",
                     "description": "Big Repo Page",
-                    "section.title.sflight": "Flights"
+                    "section.title.sflight": "Flights",
+                    "section.title.incidents": "Incidents"
                 }
             }
         ]

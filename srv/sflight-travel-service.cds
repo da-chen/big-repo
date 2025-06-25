@@ -4,9 +4,9 @@ service TravelService @(path:'/odata/v4/sflight/travel-service') {
 
   @(restrict: [
     { grant: 'READ', to: 'authenticated-user'},
-    { grant: ['rejectTravel','acceptTravel','deductDiscount'], to: 'reviewer'},
-    { grant: ['*'], to: 'processor'},
-    { grant: ['*'], to: 'admin'}
+    { grant: ['rejectTravel','acceptTravel','deductDiscount'], to: 'sflight-reviewer'},
+    { grant: ['*'], to: 'sflight-processor'},
+    { grant: ['*'], to: 'sflight-admin'}
   ])
   entity Travel as projection on my.Travel actions {
     action createTravelByTemplate() returns Travel;

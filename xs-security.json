@@ -8,8 +8,24 @@
             "description": "UAA"
         },
         {
-            "name": "$XSAPPNAME.admin",
-            "description": "Big Repo Admin"
+            "name": "$XSAPPNAME.sflight-admin",
+            "description": "SFlight Admin"
+        },
+        {
+            "name": "$XSAPPNAME.sflight-reviewer",
+            "description": "SFlight Reviewer"
+        },
+        {
+            "name": "$XSAPPNAME.sflight-processor",
+            "description": "SFlight Processor"
+        },
+        {
+            "name": "$XSAPPNAME.incidents-admin",
+            "description": "Incidents Admin"
+        },
+        {
+            "name": "$XSAPPNAME.incidents-support",
+            "description": "Incidents Support"
         }
     ],
     "attributes": [
@@ -28,10 +44,14 @@
             ]
         },
         {
-            "name": "Admin",
-            "description": "Big Repo Admin",
+            "name": "Global_Admin",
+            "description": "Big Repo Global Admin",
             "scope-references": [
-                "$XSAPPNAME.admin"
+                "$XSAPPNAME.sflight-admin",
+                "$XSAPPNAME.sflight-processor",
+                "$XSAPPNAME.sflight-reviewer",
+                "$XSAPPNAME.incidents-admin",
+                "$XSAPPNAME.incidents-support"
             ]
         }
     ],

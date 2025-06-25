@@ -23,12 +23,12 @@
                             "action": "openFLPPage",
                             "parameters": [
                                 {
-                                    "name": "pageId",
-                                    "value": "BIG_REPO_PAGE"
-                                },
-                                {
                                     "name": "spaceId",
                                     "value": "BIG_REPO_SPACE"
+                                },
+                                {
+                                    "name": "pageId",
+                                    "value": "BIG_REPO_PAGE"
                                 }
                             ]
                         },
@@ -49,7 +49,8 @@
             "payload": {
                 "layout": {
                     "sectionOrder": [
-                        "BIG_REPO_SFLIGHT_SECTION"
+                        "BIG_REPO_SFLIGHT_SECTION",
+                        "BIG_REPO_INCIDENTS_SECTION"
                     ]
                 },
                 "sections": {
@@ -70,6 +71,21 @@
                             "sap.fe.cap.travel": {
                                 "id": "sap.fe.cap.travel",
                                 "vizId": "travel-inbound"
+                            }
+                        }
+                    },
+                    "BIG_REPO_INCIDENTS_SECTION": {
+                        "id": "BIG_REPO_INCIDENTS_SECTION",
+                        "title": "Incidents",
+                        "layout": {
+                            "vizOrder": [
+                                "sap.fe.cap.incidents"
+                            ]
+                        },
+                        "viz": {
+                            "sap.fe.cap.incidents": {
+                                "id": "sap.fe.cap.incidents",
+                                "vizId": "incidents-display"
                             }
                         }
                     }
@@ -159,6 +175,45 @@
             "sap.ui": {
                 "technology": "UI5"
             }
+        },
+        "sap.fe.cap.incidents": {
+            "sap.app": {
+                "id": "sap.fe.cap.incidents",
+                "title": "Incidents Management",
+                "applicationVersion": {
+                    "version": "0.0.1"
+                },
+                "crossNavigation": {
+                    "inbounds": {
+                        "incidents-display": {
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "title": "Incidents Management",
+                            "subTitle": "",
+                            "semanticObject": "Incidents",
+                            "action": "display"
+                        }
+                    }
+                },
+                "tags": {
+                }
+            },
+            "sap.flp": {
+                "type": "application"
+            },
+            "sap.ui5": {
+                "componentName": "sap.fe.cap.incidents"
+            },
+            "sap.platform.runtime": {
+                "componentProperties": {
+                    "url": "./incidents/webapp/"
+                }
+            },
+            "sap.ui": {
+                "technology": "UI5"
+            }
         }
     },
     "contentUnits": {},
@@ -195,6 +250,22 @@
                 }
             },
             "businessApp": "sap.fe.cap.travel.BusinessApp"
+        },
+        "incidents-display": {
+            "vizType": "sap.ushell.StaticAppLauncher",
+            "vizConfig": {
+                "sap.app": {
+                    "title": "Incidents Management",
+                    "subTitle": ""
+                },
+                "sap.flp": {
+                    "target": {
+                        "appId": "sap.fe.cap.incidents",
+                        "inboundId": "incidents-display"
+                    }
+                }
+            },
+            "businessApp": "sap.fe.cap.incidents.BusinessApp"
         }
     },
     "systemAliases": {},
