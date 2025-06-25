@@ -1,0 +1,156 @@
+[
+    {
+        "_version": "3.0",
+        "identification": {
+            "id": "BIG_REPO_ROLE",
+            "title": "{{title}}",
+            "entityType": "role"
+        },
+        "payload": {
+            "catalogs": [
+                {
+                    "id": "BIG_REPO_CATALOG"
+                }
+            ],
+            "spaces": [
+                {
+                    "id": "BIG_REPO_SPACE"
+                }
+            ],
+            "apps": [
+                {
+                    "id": "sap.fe.cap.travel_analytics"
+                },
+                {
+                    "id": "sap.fe.cap.travel"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "en",
+                "textDictionary": {
+                    "title": "Big Repo Space/Catalog Role"
+                }
+            },
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Big Repo Space/Catalog Role"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.0",
+        "identification": {
+            "id": "BIG_REPO_CATALOG",
+            "title": "{{title}}",
+            "entityType": "catalog"
+        },
+        "payload": {
+            "viz": [
+                {
+                    "appId": "sap.fe.cap.travel_analytics",
+                    "vizId": "travel-alp-inbound"
+                },
+                {
+                    "appId": "sap.fe.cap.travel",
+                    "vizId": "travel-inbound"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "en",
+                "textDictionary": {
+                    "title": "Big Repo Catalog"
+                }
+            },
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Big Repo Catalog"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.1.0",
+        "identification": {
+            "id": "BIG_REPO_SPACE",
+            "title": "{{title}}",
+            "description": "{{description}}",
+            "entityType": "space"
+        },
+        "payload": {
+            "contentNodes": [
+                {
+                    "type": "page",
+                    "id": "BIG_REPO_PAGE"
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "en",
+                "textDictionary": {
+                    "title": "Big Repo",
+                    "description": "Big Repo Space"
+                }
+            },
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Big Repo",
+                    "description": "Big Repo Space"
+                }
+            }
+        ]
+    },
+    {
+        "_version": "3.1.0",
+        "identification": {
+            "id": "BIG_REPO_PAGE",
+            "title": "{{title}}",
+            "description": "{{description}}",
+            "entityType": "page"
+        },
+        "payload": {
+            "sections": [
+                {
+                    "id": "BIG_REPO_SFLIGHT_SECTION",
+                    "title": "{{section.title.sflight}}",
+                    "viz": [
+                        {
+                            "appId": "sap.fe.cap.travel_analytics",
+                            "vizId": "travel-alp-inbound"
+                        },
+                        {
+                            "appId": "sap.fe.cap.travel",
+                            "vizId": "travel-inbound"
+                        }
+                    ]
+                }
+            ]
+        },
+        "texts": [
+            {
+                "locale": "en",
+                "textDictionary": {
+                    "title": "Big Repo",
+                    "description": "Big Repo Page",
+                    "section.title.sflight": "Flights"
+                }
+            },
+            {
+                "locale": "",
+                "textDictionary": {
+                    "title": "Big Repo",
+                    "description": "Big Repo Page",
+                    "section.title.sflight": "Flights"
+                }
+            }
+        ]
+    }
+]

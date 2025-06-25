@@ -26,10 +26,8 @@ modules:
       - big-repo-db-deployer
     parameters:
       buildpack: nodejs_buildpack
-      readiness-health-check-type: http
-      readiness-health-check-http-endpoint: /health
       instances: 1 # minimal 2 in case one instance crash the other one can take over (multi-AZ)
-      memory: 512M
+      memory: 128M
       disk-quota: 4096M
       keep-existing-routes: true
       enable-ssh: true # for develoopment/troubleshooting
@@ -110,6 +108,34 @@ modules:
     build-parameters:
       build-result: resources
       requires:
+        - name: sflight-travel-analytics
+          artifacts:
+            - sflight-travel-analytics.zip
+          target-path: resources/
+        - name: sflight-travel-processor
+          artifacts:
+            - sflight-travel-processor.zip
+          target-path: resources/
+
+  - name: sflight-travel-analytics
+    type: html5
+    path: app/sflight-travel-analytics
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: sflight-travel-processor
+    type: html5
+    path: app/sflight-travel-processor
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
 
 resources:
   - name: big-repo-db

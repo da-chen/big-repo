@@ -1,0 +1,202 @@
+{
+    "site": {
+        "payload": {
+            "config": {
+                "ushellConfig": {}
+            },
+            "groupsOrder": []
+        }
+    },
+    "menus": {
+        "main": {
+            "identification": {
+                "id": "main"
+            },
+            "payload": {
+                "menuEntries": [
+                    {
+                        "id": "BIG_REPO_SPACE",
+                        "type": "IBN",
+                        "title": "Big Repo Sample Apps",
+                        "target": {
+                            "semanticObject": "Launchpad",
+                            "action": "openFLPPage",
+                            "parameters": [
+                                {
+                                    "name": "pageId",
+                                    "value": "BIG_REPO_PAGE"
+                                },
+                                {
+                                    "name": "spaceId",
+                                    "value": "BIG_REPO_SPACE"
+                                }
+                            ]
+                        },
+                        "description": "Big Repo Space"
+                    }
+                ]
+            },
+            "_version": "3.1.0"
+        }
+    },
+    "pages": {
+        "BIG_REPO_PAGE": {
+            "identification": {
+                "id": "BIG_REPO_PAGE",
+                "title": "Big Repo",
+                "entityType": "page"
+            },
+            "payload": {
+                "layout": {
+                    "sectionOrder": [
+                        "BIG_REPO_SFLIGHT_SECTION"
+                    ]
+                },
+                "sections": {
+                    "BIG_REPO_SFLIGHT_SECTION": {
+                        "id": "BIG_REPO_SFLIGHT_SECTION",
+                        "title": "Flights",
+                        "layout": {
+                            "vizOrder": [
+                                "sap.fe.cap.travel_analytics",
+                                "sap.fe.cap.travel"
+                            ]
+                        },
+                        "viz": {
+                            "sap.fe.cap.travel_analytics": {
+                                "id": "sap.fe.cap.travel_analytics",
+                                "vizId": "travel-alp-inbound"
+                            },
+                            "sap.fe.cap.travel": {
+                                "id": "sap.fe.cap.travel",
+                                "vizId": "travel-inbound"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "groups": {},
+    "layouts": {},
+    "widgets": {},
+    "_version": "3.1.0",
+    "catalogs": {},
+    "vizTypes": {},
+    "applications": {
+        "sap.fe.cap.travel_analytics": {
+            "sap.app": {
+                "id": "sap.fe.cap.travel_analytics",
+                "title": "Analyze Bookings",
+                "applicationVersion": {
+                    "version": "1.0.0"
+                },
+                "crossNavigation": {
+                    "inbounds": {
+                        "travel-alp-inbound": {
+                            "semanticObject": "booking",
+                            "action": "process",
+                            "signature": {
+                                "parameters": {
+                                },
+                                "additionalParameters": "allowed"
+                            }
+                        }
+                    }
+                },
+                "tags": {
+                }
+            },
+            "sap.flp": {
+                "type": "application"
+            },
+            "sap.ui5": {
+                "componentName": "sap.fe.cap.travel_analytics"
+            },
+            "sap.platform.runtime": {
+                "componentProperties": {
+                    "url": "./sflight-travel-analytics/webapp/"
+                }
+            },
+            "sap.ui": {
+                "technology": "UI5"
+            }
+        },
+        "sap.fe.cap.travel": {
+            "sap.app": {
+                "id": "sap.fe.cap.travel",
+                "title": "Manage Travels",
+                "applicationVersion": {
+                    "version": "1.0.0"
+                },
+                "crossNavigation": {
+                    "inbounds": {
+                        "travel-inbound": {
+                            "semanticObject": "travel",
+                            "action": "process",
+                            "signature": {
+                                "parameters": {
+                                },
+                                "additionalParameters": "allowed"
+                            }
+                        }
+                    }
+                },
+                "tags": {
+                }
+            },
+            "sap.flp": {
+                "type": "application"
+            },
+            "sap.ui5": {
+                "componentName": "sap.fe.cap.travel"
+            },
+            "sap.platform.runtime": {
+                "componentProperties": {
+                    "url": "./sflight-travel-processor/webapp/"
+                }
+            },
+            "sap.ui": {
+                "technology": "UI5"
+            }
+        }
+    },
+    "contentUnits": {},
+    "urlTemplates": {},
+    "visualizations": {
+        "travel-alp-inbound": {
+            "vizType": "sap.ushell.StaticAppLauncher",
+            "vizConfig": {
+                "sap.app": {
+                    "title": "Analyze Travels",
+                    "subTitle": ""
+                },
+                "sap.flp": {
+                    "target": {
+                        "appId": "sap.fe.cap.travel_analytics",
+                        "inboundId": "travel-alp-inbound"
+                    }
+                }
+            },
+            "businessApp": "sap.fe.cap.travel_analytics.BusinessApp"
+        },
+        "travel-inbound": {
+            "vizType": "sap.ushell.StaticAppLauncher",
+            "vizConfig": {
+                "sap.app": {
+                    "title": "Manage Travels",
+                    "subTitle": ""
+                },
+                "sap.flp": {
+                    "target": {
+                        "appId": "sap.fe.cap.travel",
+                        "inboundId": "travel-inbound"
+                    }
+                }
+            },
+            "businessApp": "sap.fe.cap.travel.BusinessApp"
+        }
+    },
+    "systemAliases": {},
+    "personalizedSite": {}
+}

@@ -29,3 +29,4 @@ Makefile*.mta
 srv/build-info.json
 resources/
 tmp/
+mta_archives/
