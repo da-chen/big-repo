@@ -105,6 +105,13 @@ modules:
       - name: big-repo-repo-host
         parameters:
           content-target: true
+    parameters:
+      config:
+        destinations:
+          - name: northwind
+            url: https://services.odata.org
+          - name: ui5
+            url: https://ui5.sap.com
     build-parameters:
       build-result: resources
       requires:
@@ -119,6 +126,14 @@ modules:
         - name: incidents
           artifacts:
             - incidents.zip
+          target-path: resources/
+        - name: books
+          artifacts:
+            - books.zip
+          target-path: resources/
+        - name: products
+          artifacts:
+            - products.zip
           target-path: resources/
 
   - name: sflight-travel-analytics
@@ -150,6 +165,27 @@ modules:
       commands:
         - npm run build:cf
       supported-platforms: []
+
+  - name: books
+    type: html5
+    path: app/books
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: products
+    type: html5
+    path: app/products
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
+
 resources:
   - name: big-repo-db
     type: com.sap.xs.hdi-container

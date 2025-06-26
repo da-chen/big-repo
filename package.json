@@ -10,6 +10,11 @@
     "url": "https://github.com/da-chen/big-repo"
   },
   "workspaces": [
+    "app/sflight-travel-analytics",
+    "app/sflight-travel-processor",
+    "app/incidents",
+    "app/books",
+    "app/products"
   ],
   "dependencies": {
     "@sap/cds": "^8",

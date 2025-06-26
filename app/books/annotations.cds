@@ -1,0 +1,1 @@
+using CatalogService as service from '../../srv/books-catalog-service';

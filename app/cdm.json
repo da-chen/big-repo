@@ -26,6 +26,12 @@
                 },
                 {
                     "id": "sap.fe.cap.incidents"
+                },
+                {
+                    "id": "sap.fe.cap.books"
+                },
+                {
+                    "id": "sap.fe.cap.products"
                 }
             ]
         },
@@ -64,6 +70,14 @@
                 {
                     "appId": "sap.fe.cap.incidents",
                     "vizId": "incidents-display"
+                },
+                {
+                    "appId": "sap.fe.cap.books",
+                    "vizId": "manage-books-inbound"
+                },
+                {
+                    "appId": "sap.fe.cap.products",
+                    "vizId": "manage-products-inbound"
                 }
             ]
         },
@@ -148,6 +162,20 @@
                             "vizId": "incidents-display"
                         }
                     ]
+                },
+                {
+                    "id": "BIG_REPO_PRODUCTS_SECTION",
+                    "title": "{{section.title.products}}",
+                    "viz": [
+                        {
+                            "appId": "sap.fe.cap.books",
+                            "vizId": "manage-books-inbound"
+                        },
+                        {
+                            "appId": "sap.fe.cap.products",
+                            "vizId": "manage-products-inbound"
+                        }
+                    ]
                 }
             ]
         },
@@ -158,7 +186,8 @@
                     "title": "Big Repo",
                     "description": "Big Repo Page",
                     "section.title.sflight": "Flights",
-                    "section.title.incidents": "Incidents"
+                    "section.title.incidents": "Incidents",
+                    "section.title.products": "Products"
                 }
             },
             {
@@ -167,7 +196,8 @@
                     "title": "Big Repo",
                     "description": "Big Repo Page",
                     "section.title.sflight": "Flights",
-                    "section.title.incidents": "Incidents"
+                    "section.title.incidents": "Incidents",
+                    "section.title.products": "Products"
                 }
             }
         ]

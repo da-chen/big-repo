@@ -50,7 +50,8 @@
                 "layout": {
                     "sectionOrder": [
                         "BIG_REPO_SFLIGHT_SECTION",
-                        "BIG_REPO_INCIDENTS_SECTION"
+                        "BIG_REPO_INCIDENTS_SECTION",
+                        "BIG_REPO_PRODUCTS_SECTION"
                     ]
                 },
                 "sections": {
@@ -86,6 +87,26 @@
                             "sap.fe.cap.incidents": {
                                 "id": "sap.fe.cap.incidents",
                                 "vizId": "incidents-display"
+                            }
+                        }
+                    },
+                    "BIG_REPO_PRODUCTS_SECTION": {
+                        "id": "BIG_REPO_PRODUCTS_SECTION",
+                        "title": "Products",
+                        "layout": {
+                            "vizOrder": [
+                                "sap.fe.cap.books",
+                                "sap.fe.cap.products"
+                            ]
+                        },
+                        "viz": {
+                            "sap.fe.cap.books": {
+                                "id": "sap.fe.cap.books",
+                                "vizId": "manage-books-inbound"
+                            },
+                            "sap.fe.cap.products": {
+                                "id": "sap.fe.cap.products",
+                                "vizId": "manage-products-inbound"
                             }
                         }
                     }
@@ -214,6 +235,84 @@
             "sap.ui": {
                 "technology": "UI5"
             }
+        },
+        "sap.fe.cap.books": {
+            "sap.app": {
+                "id": "sap.fe.cap.books",
+                "title": "Books",
+                "applicationVersion": {
+                    "version": "0.0.1"
+                },
+                "crossNavigation": {
+                    "inbounds": {
+                        "manage-books-inbound": {
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "title": "Books",
+                            "subTitle": "",
+                            "semanticObject": "Books",
+                            "action": "manage"
+                        }
+                    }
+                },
+                "tags": {
+                }
+            },
+            "sap.flp": {
+                "type": "application"
+            },
+            "sap.ui5": {
+                "componentName": "sap.fe.cap.books"
+            },
+            "sap.platform.runtime": {
+                "componentProperties": {
+                    "url": "./books/webapp/"
+                }
+            },
+            "sap.ui": {
+                "technology": "UI5"
+            }
+        },
+        "sap.fe.cap.products": {
+            "sap.app": {
+                "id": "sap.fe.cap.products",
+                "title": "Products",
+                "applicationVersion": {
+                    "version": "1.0.0"
+                },
+                "crossNavigation": {
+                    "inbounds": {
+                        "manage-products-inbound": {
+                            "signature": {
+                                "parameters": {},
+                                "additionalParameters": "allowed"
+                            },
+                            "title": "Products",
+                            "subTitle": "",
+                            "semanticObject": "product",
+                            "action": "manage"
+                        }
+                    }
+                },
+                "tags": {
+                }
+            },
+            "sap.flp": {
+                "type": "application"
+            },
+            "sap.ui5": {
+                "componentName": "sap.fe.cap.products"
+            },
+            "sap.platform.runtime": {
+                "componentProperties": {
+                    "url": "./products/webapp/"
+                }
+            },
+            "sap.ui": {
+                "technology": "UI5"
+            }
         }
     },
     "contentUnits": {},
@@ -266,6 +365,38 @@
                 }
             },
             "businessApp": "sap.fe.cap.incidents.BusinessApp"
+        },
+        "manage-books-inbound": {
+            "vizType": "sap.ushell.StaticAppLauncher",
+            "vizConfig": {
+                "sap.app": {
+                    "title": "Books",
+                    "subTitle": ""
+                },
+                "sap.flp": {
+                    "target": {
+                        "appId": "sap.fe.cap.books",
+                        "inboundId": "manage-books-inbound"
+                    }
+                }
+            },
+            "businessApp": "sap.fe.cap.books.BusinessApp"
+        },
+        "manage-products-inbound": {
+            "vizType": "sap.ushell.StaticAppLauncher",
+            "vizConfig": {
+                "sap.app": {
+                    "title": "Products",
+                    "subTitle": ""
+                },
+                "sap.flp": {
+                    "target": {
+                        "appId": "sap.fe.cap.products",
+                        "inboundId": "manage-products-inbound"
+                    }
+                }
+            },
+            "businessApp": "sap.fe.cap.products.BusinessApp"
         }
     },
     "systemAliases": {},
